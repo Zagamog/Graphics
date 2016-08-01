@@ -107,3 +107,140 @@ legend(x = 5, y = 33, legend = levels(mtcars$cyl),
        col = 1:3, pch = 1, bty = "n")
 
 
+# Plot 1: add geom_point() to this command to create a scatter plot
+ggplot(mtcars, aes(x = wt, y = mpg, col = cyl)) +
+  geom_point()
+
+# Plot 2: include the lines of the linear models, per cyl
+ggplot(mtcars, aes(x = wt, y = mpg, col = cyl)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# Plot 3: include a lm for the entire dataset in its whole
+ggplot(mtcars, aes(x = wt, y = mpg, col = cyl)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_smooth(aes(group = 1), method = "lm", se = FALSE, linetype = 2)
+
+# Consider the structure of iris, iris.wide and iris.tidy (in that order)
+str(iris)
+str(iris.wide)
+str(iris.tidy)
+
+
+# Think about which dataset you would use to get the plot shown right
+# Fill in the ___ to produce the plot given to the right
+ggplot(iris.tidy, aes(x = Species, y = Value, col = Part)) +
+  geom_jitter() +
+  facet_grid(Value ~ Measure)
+
+
+# Load the tidyr package
+library(tidyr)
+
+# Fill in the ___ to produce to the correct iris.tidy dataset
+iris.tidy <- iris %>%
+  gather(key, Value, -Species) %>%
+  separate(key, c("Part", "Measure"), "\\.") 
+
+
+# Consider the head of iris, iris.wide and iris.tidy (in that order)
+head(iris)
+head(iris.wide)
+head(iris.tidy)
+
+# Think about which dataset you would use to get the plot shown right
+# Fill in the ___ to produce the plot given to the right
+ggplot(iris.wide, aes(x = Length, y = Width, col = Part)) +
+  geom_jitter() +
+  facet_grid(Length ~ Species)
+
+library(tidyr)
+
+# Add column with unique ids (don't need to change)
+iris$Flower <- 1:nrow(iris)
+
+# Fill in the ___ to produce to the correct iris.wide dataset
+iris.wide <- iris %>%
+  gather(key, value, -Species, -Flower) %>%
+  separate(key, c("Part", "Measure"), "\\.") %>%
+  spread(Measure, value)
+# Map cyl to y
+ggplot(mtcars, aes(x=mpg, y=cyl))+
+  geom_point()
+
+# Map cyl to x
+ggplot(mtcars, aes(x=cyl, y=mpg))+
+  geom_point()
+
+# Map cyl to col
+ggplot(mtcars,aes(x=wt, y=mpg, col=cyl))+
+  geom_point()
+# Change shape and size of the points in the above plot
+ggplot(mtcars,aes(x=wt, y=mpg, col=cyl))+
+  geom_point(shape=1,size=4)
+
+
+ggplot(mtcars, aes(x = wt, y = mpg, col = cyl)) +
+  geom_point(shape = 1, size = 4)
+
+# Map cyl to fill
+ggplot(mtcars, aes(x = wt, y = mpg, fill=cyl)) +
+  geom_point()
+
+
+# Change shape, size and alpha of the points in the above plot
+ggplot(mtcars, aes(x = wt, y = mpg, fill=cyl)) +
+  geom_point(shape=21,size=6,alpha=0.6)
+
+
+ggplot(mtcars,aes(x=wt, y=mpg, size=cyl))+
+  geom_point()
+
+# Map cyl to alpha
+ggplot(mtcars,aes(x=wt, y=mpg, alpha=cyl))+
+  geom_point()
+
+
+# Map cyl to shape 
+ggplot(mtcars,aes(x=wt, y=mpg, shape=cyl))+
+  geom_point()
+
+
+
+# Map cyl to labels
+ggplot(mtcars,aes(x=wt, y=mpg, label=cyl))+
+  geom_text()
+
+
+my_color <- "#122229"
+
+# Set the color aesthetic 
+ggplot(mtcars,aes(x=wt,y=mpg,col=cyl)) + geom_point()
+
+
+# Set the color aesthetic and attribute 
+ggplot(mtcars,aes(x=wt,y=mpg,col=cyl)) + geom_point(col=my_color,size=4)
+
+
+# Set the fill aesthetic and color, size and shape attributes
+ggplot(mtcars,aes(x=wt,y=mpg,fill=cyl)) + geom_point(col=my_color,size=10,shape=23)
+
+# Expand to draw points with alpha 0.5
+ggplot(mtcars, aes(x = wt, y = mpg, fill = cyl)) +
+  geom_point(alpha = 0.5)
+
+# Expand to draw points with shape 24 and color yellow
+ggplot(mtcars, aes(x = wt, y = mpg, fill = cyl)) +
+  geom_point(shape = 24, color = 'yellow',size=3)
+
+# Expand to draw text with label x, color red and size 10
+ggplot(mtcars, aes(x = wt, y = mpg, fill = cyl)) +
+  geom_text(label = "x", color = 'red', size = 10)
+
+
+
+
+
+
+
