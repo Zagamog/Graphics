@@ -335,12 +335,380 @@ ggplot(diamonds,aes(x=clarity, y=carat, col=price)) +
 ggplot(diamonds,aes(x=clarity, y=carat, col=price)) +
             geom_point(alpha=0.5,position="jitter")
                             
-                            
-                            
+######################################################
+mtcars$cyl <- factor(mtcars$cyl)
+# The dataset mtcars is available for you
+
+# Plot the cyl on the x-axis and wt on the y-axis
+ggplot(mtcars,aes(x=cyl,y=wt)) +
+  geom_point()
 
 
+# Use geom_jitter() instead of geom_point()
+ggplot(mtcars,aes(x=cyl,y=wt)) +
+  geom_jitter()
 
 
+# Define the position object using position_jitter(): posn.j
+posn.j <- position_jitter(width=0.1)
 
+# Use posn.j in geom_point()
+ggplot(mtcars,aes(x=cyl,y=wt)) +
+  geom_point(position=posn.j)
+####################################################
+library(car)
+
+# Also from downloaded csv Vocab <- read.csv(file="C:/Users/wb164718/Documents/R/Graphics/Graphics/Vocab.csv")
+
+
+# Examine the structure of Vocab
+str(Vocab)
+
+# Basic scatter plot of vocabulary (y) against education (x). Use geom_point()
+ggplot(Vocab,aes(x=education, y=vocabulary)) +
+  geom_point()
+
+# Use geom_jitter() instead of geom_point()
+ggplot(Vocab,aes(x=education, y=vocabulary)) +
+  geom_jitter()
+
+# Using the above plotting command, set alpha to a very low 0.2
+ggplot(Vocab,aes(x=education, y=vocabulary)) +
+  geom_jitter(alpha=0.2)
+
+# Using the above plotting command, set the shape to 1
+ggplot(Vocab,aes(x=education, y=vocabulary)) +
+  geom_jitter(alpha=0.2,shape=1)
+
+######################################################
+# Make a univariate histogram
+ggplot(mtcars, aes(mpg)) +
+  geom_histogram()
+
+# Change the bin width to 1
+ggplot(mtcars, aes(mpg)) +
+  geom_histogram(binwidth = 1)
+
+# Change the y aesthetic to density
+ggplot(mtcars, aes(mpg)) +
+  geom_histogram(aes(y=..density..), binwidth = 1)
+
+# Custom color code
+myBlue <- "#377EB8"
+
+# Change the fill color to myBlue
+ggplot(mtcars, aes(mpg)) +
+  geom_histogram(aes(y = ..density..),
+                 binwidth = 1, fill = myBlue)
+###############################################
+
+mtcars$cyl <- factor(mtcars$cyl)
+mtcars$am <- factor(mtcars$am)
+
+# Draw a bar plot of cyl, filled according to am
+ggplot(mtcars,aes(x=cyl, fill=am)) +
+  geom_bar()
+
+# Change the position argument to stack
+ggplot(mtcars,aes(x=cyl, fill=am)) +
+  geom_bar(position="stack")
+
+# Change the position argument to fill
+ggplot(mtcars,aes(x=cyl, fill=am)) +
+  geom_bar(position="fill")
+
+# Change the position argument to dodge
+ggplot(mtcars,aes(x=cyl, fill=am)) +
+  geom_bar(position="dodge")
+
+###############################################
+
+# Draw a bar plot of cyl, filled according to am
+ggplot(mtcars, aes(x=cyl, fill=am)) +
+  geom_bar(position="stack")
+
+# Change the position argument to "dodge"
+ggplot(mtcars, aes(x=cyl, fill=am)) +
+  geom_bar(position="dodge")
+
+# Define posn_d with position_dodge()
+posn_d <- position_dodge(width=0.2)
+
+# Change the position argument to posn_d
+ggplot(mtcars, aes(x=cyl, fill=am)) +
+  geom_bar(position=posn_d)
+
+# Use posn_d as position and adjust alpha to 0.6
+ggplot(mtcars, aes(x=cyl, fill=am)) +
+  geom_bar(position=posn_d,alpha=0.6)
+
+################################################
+
+# A basic histogram, add coloring defined by cyl 
+ggplot(mtcars, aes(x=mpg,fill=cyl)) +
+  geom_histogram(binwidth = 1)
+
+# Change position to identity 
+ggplot(mtcars, aes(x=mpg,fill=cyl)) +
+  geom_histogram(binwidth = 1,position="identity")
+
+
+# Change geom to freqpoly (position is identity by default) 
+ggplot(mtcars, aes(x=mpg,col=cyl)) +
+  geom_freqpoly(binwidth = 1,position="identity")
+
+###################################################
+# Example of how to use a brewed color palette
+ggplot(mtcars, aes(x = cyl, fill = am)) +
+  geom_bar() +
+  scale_fill_brewer(palette = "Set1")
+
+# Use str() on Vocab to check out the structure
+str(Vocab)
+
+# Plot education on x and vocabulary on fill
+# Use the default brewed color palette
+ggplot(Vocab, aes(x = factor(education), fill = factor(vocabulary))) +
+  geom_bar(position="fill") +
+  scale_fill_brewer()
+
+#######################################################
+library(cars)
+Vocab$education=factor(Vocab$education)
+Vocab$vocabulary=factor(Vocab$vocabulary)
+library(ggplot2)
+
+library(RColorBrewer)
+# Final plot of last exercise
+ggplot(Vocab, aes(x = education, fill = vocabulary)) +
+  geom_bar(position = "fill") +
+  scale_fill_brewer()
+
+# Definition of a set of blue colors
+blues <- brewer.pal(9, "Blues")
+
+# Make a color range using colorRampPalette() and the set of blues
+blue_range <- colorRampPalette(blues)
+
+# Use blue_range to adjust the color of the bars, use scale_fill_manual()
+ggplot(Vocab, aes(x = education, fill = vocabulary)) +
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = blue_range(11))
+
+#######################################################
+# Basic histogram plot command
+ggplot(mtcars, aes(mpg)) + 
+  geom_histogram(binwidth = 1)
+
+# Expand the histogram to fill using am
+ggplot(mtcars, aes(x=mpg,fill=am)) + 
+  geom_histogram(binwidth = 1)
+
+# Change the position argument to "dodge"
+ggplot(mtcars, aes(x=mpg,fill=am)) + 
+  geom_histogram(binwidth = 1,position="dodge")
+
+# Change the position argument to "fill"
+ggplot(mtcars, aes(x=mpg,fill=am)) + 
+  geom_histogram(binwidth = 1,position="fill")
+
+# Change the position argument to "identity" and set alpha to 0.4
+ggplot(mtcars, aes(x=mpg,fill=am)) + 
+  geom_histogram(binwidth = 1,position="identity", alpha=0.4)
+
+# Change fill to cyl
+ggplot(mtcars, aes(x=mpg,fill=cyl)) + 
+  geom_histogram(binwidth = 1,position="identity", alpha=0.4)
+###############################################################
+# Print out head of economics
+head(economics)
+
+# Plot unemploy as a function of date using a line plot
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_line()
+
+# Adjust plot to represent the fraction of total population that is unemployed
+ggplot(economics, aes(x = date, y = unemploy/pop)) +
+  geom_line()
+##############################################################
+# Expand the following command with geom_rect() to draw the recess periods
+
+cards <-("
+begin        end
+1969-12-01 1970-11-01
+1973-11-01 1975-03-01
+1980-01-01 1980-07-01
+1981-07-01 1982-11-01
+1990-07-01 1991-03-01
+2001-03-01 2001-11-01")
+
+recess <- read.table(textConnection(cards),header=TRUE)
+closeAllConnections()
+
+
+recess$begin <- as.Date(recess$begin)  # to convert ordinary $ string from read.table to date format
+recess$end <- as.Date(recess$end)
+
+str(recess)
+
+ggplot(economics, aes(x = date, y = unemploy/pop)) +
+  geom_line()+
+  geom_rect(data=recess,inherit.aes=FALSE,
+            aes(xmin=begin,xmax=end,ymin=-Inf,ymax=+Inf),fill="red",alpha=0.2)
+
+####################################################################
+cards <-("
+   Year   Pink   Chum Sockeye  Coho Rainbow Chinook Atlantic
+1  1950 100600 139300   64100 30500       0   23200    10800
+         2  1951 259000 155900   51200 40900     100   25500     9701
+         3  1952 132600 113800   58200 33600     100   24900     9800
+         4  1953 235900  99800   66100 32400     100   25300     8800
+         5  1954 123400 148700   83800 38300     100   24500     9600
+         6  1955 244400 143700   72000 45100     100   27700     7800
+         7  1956 203400 158480   84800 40000     100   25300     8100
+         8  1957 270119 125377   69676 39900     100   21200     9000
+         9  1958 200798 132407  100520 39200     100   20900     8801
+         10 1959 200085 113114   62472 32865     100   20335     8700
+         11 1960 111880 120760   83171 26898     100   17412     8900
+         12 1961 178133 109053   93311 37524     200   18130     9400
+         13 1962 163558 110707   66126 39883     300   17489    11500
+         14 1963 222477 106491   53140 41547    1600   18928    10766
+         15 1964 143623  94498   56189 38948    2300   20932    14342
+         16 1965 161131  76503   94286 44207    1500   21197    12363
+         17 1966 174844  93949   81080 46874     900   21549    12337
+         18 1967 168960  88027   75582 43396    1700   21375    14411
+         19 1968 155729  95624  113332 46463   11200   20720    12823
+         20 1969 195169  67888   65106 30973    3000   21915    13316
+         21 1970 133466 113650  106436 44050    4400   24000    13457
+         22 1971 178823 105879   79160 43110    4600   25800    12397
+         23 1972  93852 137655   43932 33880    4900   24000    12665
+         24 1973 151180 125364   55637 38550    6900   27400    15387
+         25 1974  94026 121052   53027 42631    8099   24148    15158
+         26 1975 171012 127561   38615 31782   10302   24137    14736
+         27 1976 146895 125110   60357 36965    9492   24984    11372
+         28 1977 224475 118677   64651 30777    6166   26351    11491
+         29 1978 174314 129513   75737 30712    7219   25417     8948
+         30 1979 249558 150176  109439 34279    7036   25452    10259
+         31 1980 226191 166803  111830 30557    9027   23023    12965
+         32 1981 264855 186550  132651 28702    8819   22789    12425
+         33 1982 170373 182561  128176 42281    6839   25147    10326
+         34 1983 255129 196414  163790 30291    7473   18926    10862
+         35 1984 210511 210507  126834 40834    7977   18449    10562
+         36 1985 300987 267794  150860 38823    9373   20318    12422
+         37 1986 211685 239065  136452 42825    9709   21187    11739
+         38 1987 218121 217129  131135 28173   12196   25475    11413
+         39 1988 165236 286572  107361 32245   11872   31338    10093
+         40 1989 363456 243728  169410 31614   12249   20725    15795
+         41 1990 235190 299438  198168 34635   12529   18249    10860
+         42 1991 438998 266940  161218 38078   12545   15373     9793
+         43 1992 216110 238427  199709 38433    9731   15093     9308
+         44 1993 302568 286996  242613 25451   19091   15036     8161
+         45 1994 326065 328765  183686 45602   12624   13623     7231
+         46 1995 394735 424595  189612 28922   13450   13801     6819
+         47 1996 294915 411395  188584 28201   12407   10509     6493
+         48 1997 318717 347560  132075 13191   13147   13000     5579
+         49 1998 371552 311965   78972 19386   18940    9840     4744
+         50 1999 386928 281260  130128 15449   15874    8735     4107
+         51 2000 285338 276355  124782 18035   14918    8437     4710
+         52 2001 360973 307662  108618 20006   14927    8771     4772
+         53 2002 268544 314098  103325 20757   12241   13911     4139
+         54 2003 377749 360429  109822 16995   17128   15046     3648
+         55 2004 266554 351188  142385 24546   16601   15899     4082
+         56 2005 456350 318389  147151 18791   16886   13571     3727
+         57 2006 316205 361561  151523 18275   17079   10497     3087
+         58 2007 506343 331266  164609 17228   14844    8900     3014
+         59 2008 294876 295819  138896 21280   16819    6443     3002
+         60 2009 591654 359908  150040 19725   17884    6303     2373
+         61 2010 370044 143959  170972 20770   20754    7968     2363")
+
+fish.species <- read.table(textConnection(cards), header=TRUE)
+closeAllConnections()
+
+library(tidyr)
+
+# Check the structure as a starting point
+str(fish.species)
+
+# Use gather to go from fish.species to fish.tidy
+fish.tidy <- gather(data=fish.species,key=Species,value=Capture,-Year)
+
+
+# Recreate the plot shown on the right
+ggplot(fish.tidy, aes(x = Year, y = Capture, col = Species)) + 
+  geom_line()
+
+
+###########################################
+# The old way (shown)
+plot(mpg ~ wt, data = mtcars)
+
+# Using ggplot:
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
+
+# Using qplot:
+qplot(wt, mpg, data = mtcars) 
+
+###################################
+
+# basic scatter plot:
+qplot(wt, mpg, data = mtcars)
+
+# Categorical:
+# cyl
+qplot(wt, mpg, data = mtcars, size = factor(cyl))
+
+# gear
+qplot(wt, mpg, data = mtcars, size = factor(gear))
+
+# Continuous
+# hp
+qplot(wt, mpg, data = mtcars, col = hp)
+
+# qsec
+qplot(wt, mpg, data = mtcars, col = qsec)
+############################
+
+# ChickWeight is available in your workspace
+
+# Check out the head of ChickWeight
+head(ChickWeight)
+
+# Use ggplot() for the second instruction
+ggplot(ChickWeight,aes(x=Time, y=weight)) +
+  geom_line(aes(group=Chick))
+
+# Use ggplot() for the third instruction
+ggplot(ChickWeight,aes(x=Time, y=weight, col=Diet)) +
+  geom_line(aes(group=Chick))
+# Use ggplot() for the last instruction
+ggplot(ChickWeight,aes(x=Time, y=weight, col=Diet)) +
+  geom_line(aes(group=Chick),alpha=0.3) +
+  geom_smooth(lwd=2,se=FALSE)
+
+###################################
+
+titanic <- read.table(file="C:/Users/wb164718/Documents/R/Graphics/Graphics/titanic.txt", header=TRUE)
+
+
+# Check out the structure of titanic
+str(titanic)
+
+# Use ggplot() for the first instruction
+ggplot(titanic, aes(x=factor(Pclass),fill=factor(Sex))) +
+  geom_bar(position="dodge")
+
+# Use ggplot() for the second instruction
+ggplot(titanic, aes(x=factor(Pclass),fill=factor(Sex))) +
+  geom_bar(position="dodge") +
+  facet_grid(". ~ Survived")
+
+# Position jitter (use below)
+posn.j <- position_jitter(0.5, 0)
+
+# Use ggplot() for the last instruction
+ggplot(titanic, aes(x=factor(Pclass), y=Age, col=factor(Sex))) +
+  geom_jitter(size=3,alpha=0.5, position=posn.j) +
+  facet_grid(". ~ Survived")
 
 
