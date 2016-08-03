@@ -20,3 +20,15 @@ blue_range <- colorRampPalette(blues)
 ggplot(Vocab, aes(x = education, fill = vocabulary)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = blue_range(11))
+
+##############################################
+# Alternate red and blue
+mtcars$cyl_am <- paste(mtcars$cyl, mtcars$am, sep = "_")
+myCol <- rbind(brewer.pal(9, "Blues")[c(3,6,8)],
+               brewer.pal(9, "Reds")[c(3,6,8)])
+
+# Basic scatter plot, add color scale:
+ggplot(mtcars, aes(x = wt, y = mpg, col=cyl_am)) +
+  geom_point(size=4) +
+  scale_color_manual(values=myCol)
+#############################################
